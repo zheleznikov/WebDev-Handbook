@@ -126,7 +126,7 @@ export default async function NotePage({ params }: NotePageProps) {
                 </div>
 
                 {relatedNotes.length > 0 && (
-                    <section className="mt-10 border-t border-slate-200 dark:border-slate-700 pt-6">
+                    <section className="mt-10 border-t border-slate-200 dark:border-slate-700 pt-6 pl-8 sm:pl-0">
                         <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">
                             Другие материалы по теме
                         </h2>

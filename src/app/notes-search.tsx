@@ -19,35 +19,71 @@ type Props = {
 };
 
 export function NotesSearch({ notes }: Props) {
+
+
+
     const [query, setQuery] = useState("");
 
     const filteredNotes = useMemo(() => {
-        const q = query.trim().toLowerCase();
+        const raw = query.trim().toLowerCase();
+        if (!raw) return notes;
 
-        if (!q) return notes;
+        const tokens = raw.split(/\s+/);
 
-        if (q.startsWith("#")) {
-            const tagQuery = q.slice(1); // убираем "#"
+        // Теги: все слова, начинающиеся с "#"
+        const tagFilters = tokens
+            .filter((t) => t.startsWith("#"))
+            .map((t) => t.slice(1))       // убираем "#"
+            .filter(Boolean);             // убираем пустые строки типа "#"
 
-            return notes.filter((note) => {
-                const tags = (note.meta.tags || []).map((t) => t.toLowerCase());
-                return tags.includes(tagQuery);
-            });
-        }
+        // Остальной текст — обычный поисковый запрос
+        const textQuery = tokens
+            .filter((t) => !t.startsWith("#"))
+            .join(" ")
+            .trim();
 
         return notes.filter((note) => {
             const title = (note.meta.title || note.slug).toLowerCase();
             const description = (note.meta.description || "").toLowerCase();
-            const tags = (note.meta.tags || []).join(" ").toLowerCase();
+            const noteTags = (note.meta.tags || []).map((t) => t.toLowerCase());
+            const tagsString = noteTags.join(" ");
+            const slug = note.slug.toLowerCase();
 
-            return (
-                title.includes(q) ||
-                description.includes(q) ||
-                tags.includes(q) ||
-                note.slug.toLowerCase().includes(q)
-            );
+            // 1) Проверяем теги (AND: заметка должна содержать все указанные теги)
+            const matchesTags =
+                tagFilters.length === 0 ||
+                tagFilters.every((tag) => noteTags.includes(tag));
+
+            // 2) Проверяем текст
+            const matchesText =
+                !textQuery ||
+                title.includes(textQuery) ||
+                description.includes(textQuery) ||
+                tagsString.includes(textQuery) ||
+                slug.includes(textQuery);
+
+            return matchesTags && matchesText;
         });
     }, [notes, query]);
+
+    const allTags = useMemo(() => {
+        const tags = new Set<string>();
+        notes.forEach(note => {
+            (note.meta.tags || []).forEach(t => tags.add(t));
+        });
+        return Array.from(tags).sort();
+    }, [notes]);
+
+
+    const tagSuggestions = useMemo(() => {
+        if (!query.startsWith("#")) return [];
+
+        const clean = query.slice(1).toLowerCase();
+
+        return allTags.filter(tag =>
+            tag.toLowerCase().startsWith(clean)
+        );
+    }, [query, allTags]);
 
 
     return (
@@ -74,7 +110,6 @@ export function NotesSearch({ notes }: Props) {
                     transition-colors
                 "
                 />
-
                 {query && (
                     <button
                         type="button"
@@ -89,6 +124,31 @@ export function NotesSearch({ notes }: Props) {
                     >
                         Очистить
                     </button>
+                )}
+                {tagSuggestions.length > 0 && (
+                    <div
+                        className="
+                absolute left-0 right-0 mt-1
+                bg-white dark:bg-slate-800
+                border border-slate-200 dark:border-slate-700
+                rounded-xl shadow-lg z-20
+                max-h-60 overflow-y-auto
+            "
+                    >
+                        {tagSuggestions.map(tag => (
+                            <button
+                                key={tag}
+                                onClick={() => setQuery(`#${tag}`)}
+                                className="
+                        w-full text-left px-4 py-2 text-sm
+                        hover:bg-slate-100 dark:hover:bg-slate-700
+                        text-slate-700 dark:text-slate-200
+                    "
+                            >
+                                #{tag}
+                            </button>
+                        ))}
+                    </div>
                 )}
             </div>
 
