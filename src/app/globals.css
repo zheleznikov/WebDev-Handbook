@@ -1,1 +1,163 @@
 @import "tailwindcss";
+@custom-variant dark (&:where(.dark, .dark *));
+@plugin "@tailwindcss/typography";
+
+/* Глобально отключаем все highlight.js стили */
+.hljs { all: unset; }
+
+/* Светлая тема применяется к article в светлом режиме */
+.prose-notes {
+@import "highlight.js/styles/github.css";
+}
+
+/* Тёмная — только когда есть .dark */
+.dark .prose-notes {
+@import "highlight.js/styles/github-dark.css";
+}
+
+
+
+:root {
+    --color-page-bg: #faf5f0;      /* фон страницы */
+    --color-page-text: #020617;    /* текст */
+}
+
+.dark {
+    --color-page-bg: #020617;
+    --color-page-text: #e5e7eb;
+}
+
+
+@utility prose-notes {
+    @apply prose prose-slate;
+
+    /* Цвета типографики */
+    --tw-prose-body: var(--color-slate-800);
+    --tw-prose-headings: var(--color-slate-900);
+    --tw-prose-links: var(--color-blue-600);
+    --tw-prose-bold: var(--color-slate-900);
+    --tw-prose-quotes: var(--color-slate-800);
+
+    max-width: 68ch;
+    margin-inline: auto;
+    font-family: var(--font-body);
+
+    /* Общий стиль */
+& p {
+      margin-top: 0.4em;
+      margin-bottom: 0.4em;
+      line-height: 1.55;
+      font-size: 1.02rem;
+  }
+
+    /* Заголовки */
+& h1 {
+      font-size: 2.2rem;
+      font-weight: 700;
+      margin-bottom: 0.7em;
+      letter-spacing: -0.03em;
+  }
+
+& h2 {
+      font-size: 1.55rem;
+      font-weight: 600;
+      margin-top: 1.6em;
+      margin-bottom: 0.5em;
+      letter-spacing: -0.02em;
+  }
+
+& h3 {
+      font-size: 1.25rem;
+      font-weight: 600;
+      margin-top: 1.3em;
+      margin-bottom: 0.4em;
+      letter-spacing: -0.01em;
+  }
+
+    /* Ссылки */
+& a {
+      text-decoration: none;
+      font-weight: 500;
+      border-bottom: 1px solid var(--color-blue-300);
+      transition: border-color 0.2s ease;
+  }
+
+& a:hover {
+      border-color: var(--color-blue-600);
+  }
+
+    /* Цитаты */
+& blockquote {
+      border-left: 4px solid var(--color-slate-300);
+      padding-left: 1em;
+      color: var(--color-slate-600);
+      font-style: normal;
+      margin: 1em 0;
+  }
+
+    /* Lists */
+& ul,
+& ol {
+      padding-left: 1.2em;
+  }
+
+& li {
+      margin: 0.2em 0;
+  }
+
+    /* Inline code */
+& code {
+      background: var(--color-slate-100);
+      border-radius: 0.35rem;
+      padding: 0.15em 0.35em;
+      font-size: 0.9em;
+  }
+
+    /* Code blocks */
+& pre {
+      background: inherit;
+      color: var(--color-slate-50);
+      padding: 1rem 1.2rem;
+      border-radius: 0.8rem;
+      border: none;
+
+
+      box-shadow: 0 1px 4px rgba(0,0,0,0.04);
+      overflow-x: auto;
+      margin-block: 1em;
+      font-size: 0.92rem;
+  }
+
+    /* Tables */
+& table {
+      width: 100%;
+      border-collapse: collapse;
+      margin: 1.2em 0;
+      font-size: 0.95rem;
+  }
+
+& th {
+      border-bottom: 2px solid var(--color-slate-300);
+      padding: 0.4em 0.5em;
+      text-align: left;
+  }
+
+& td {
+      padding: 0.4em 0.5em;
+      border-bottom: 1px solid var(--color-slate-200);
+  }
+
+    /* Images */
+& img {
+      border-radius: 0.75rem;
+      margin-block: 1em;
+  }
+}
+
+/* Dark mode улучшенный */
+.dark .prose-notes {
+    --tw-prose-body: var(--color-slate-300);
+    --tw-prose-headings: var(--color-slate-100);
+    --tw-prose-links: var(--color-blue-400);
+    --tw-prose-quotes: var(--color-slate-400);
+}
