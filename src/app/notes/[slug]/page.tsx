@@ -50,47 +50,63 @@ export default async function NotePage({ params }: NotePageProps) {
             transition-colors
         "
         >
-            <div className="mx-auto max-w-3xl px-4 sm:px-6 py-8">
-                {/* Заголовок страницы */}
-                <header className="mb-6">
-                    <h1
-                        className="
-                        text-xs font-medium uppercase tracking-[0.2em]
-                        text-slate-400 mb-1
-                        dark:text-slate-500
-                    "
-                    >
-                        {`<${note.meta.title || note.slug}/>`}
-                    </h1>
 
-                    {note.meta.description && (
-                        <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
-                            {note.meta.description}
-                        </p>
-                    )}
 
-                    {currentTags.length > 0 && (
-                        <div className="mt-3 flex flex-wrap gap-1.5">
-                            {currentTags.map((tag) => (
-                                <span
-                                    key={tag}
-                                    className="
-                                    inline-flex items-center rounded-full
-                                    border border-emerald-100 bg-emerald-50
-                                    px-2.5 py-0.5 text-xs font-medium
-                                    text-emerald-700
+            <div className="mx-auto w-full px-0 sm:px-6 py-8 sm:max-w-3xl">
 
-                                    dark:border-emerald-900/40
-                                    dark:bg-emerald-900/20
-                                    dark:text-emerald-300
-                                "
-                                >
-                                {tag}
-                            </span>
-                            ))}
-                        </div>
-                    )}
+            {/* Заголовок страницы */}
+                <header className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
+                    {/* Левая колонка: заголовок + описание + теги */}
+                    <div className="flex-1">
+                        <h1
+                            className="
+                text-xs font-medium uppercase tracking-[0.2em]
+                text-slate-400 mb-1
+                dark:text-slate-500
+                pl-4
+            "
+                        >
+                            {`${note.meta.title || note.slug}`}
+                        </h1>
+
+                        {note.meta.description && (
+                            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                                {note.meta.description}
+                            </p>
+                        )}
+
+                        {currentTags.length > 0 && (
+                            <div className="mt-3 flex flex-wrap gap-1.5 pl-4">
+                                {currentTags.map((tag) => (
+                                    <span
+                                        key={tag}
+                                        className="
+                            inline-flex items-center rounded-full
+                            border border-emerald-100 bg-emerald-50
+                            px-2.5 py-0.5 text-xs font-medium
+                            text-emerald-700
+
+                            dark:border-emerald-900/40
+                            dark:bg-emerald-900/20
+                            dark:text-emerald-300
+                        "
+                                    >
+                        {tag}
+                    </span>
+                                ))}
+                            </div>
+                        )}
+                    </div>
+
+                    {/* Правая колонка: Share button */}
+                    <div className="pl-4 sm:pl-0 sm:pt-1">
+                        <ShareButton
+                            title={note.meta.title || note.slug}
+                            description={note.meta.description}
+                        />
+                    </div>
                 </header>
+
 
                 <div
                     className="
@@ -99,12 +115,7 @@ export default async function NotePage({ params }: NotePageProps) {
                     transition-colors
                 "
                 >
-                    <div className="absolute right-3 top-3">
-                        <ShareButton
-                            title={note.meta.title || note.slug}
-                            description={note.meta.description}
-                        />
-                    </div>
+
 
                     <div className="px-4 sm:px-6 py-5">
                         <article

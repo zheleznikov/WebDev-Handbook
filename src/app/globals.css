@@ -2,15 +2,12 @@
 @custom-variant dark (&:where(.dark, .dark *));
 @plugin "@tailwindcss/typography";
 
-/* Глобально отключаем все highlight.js стили */
 .hljs { all: unset; }
 
-/* Светлая тема применяется к article в светлом режиме */
 .prose-notes {
 @import "highlight.js/styles/github.css";
 }
 
-/* Тёмная — только когда есть .dark */
 .dark .prose-notes {
 @import "highlight.js/styles/github-dark.css";
 }
@@ -38,7 +35,6 @@
     --tw-prose-bold: var(--color-slate-900);
     --tw-prose-quotes: var(--color-slate-800);
 
-    max-width: 68ch;
     margin-inline: auto;
     font-family: var(--font-body);
 
@@ -154,10 +150,15 @@
   }
 }
 
-/* Dark mode улучшенный */
 .dark .prose-notes {
     --tw-prose-body: var(--color-slate-300);
     --tw-prose-headings: var(--color-slate-100);
     --tw-prose-links: var(--color-blue-400);
+    --tw-prose-bold: var(--color-slate-100);    /* вот это добавляем */
     --tw-prose-quotes: var(--color-slate-400);
+
+& strong,
+& b {
+      color: var(--tw-prose-bold);
+  }
 }

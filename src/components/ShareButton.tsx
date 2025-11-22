@@ -2,6 +2,7 @@
 "use client";
 
 import { useState } from "react";
+import { Share, Share2 } from "lucide-react";
 
 type ShareButtonProps = {
     title: string;
@@ -56,15 +57,11 @@ export function ShareButton({title, description}: ShareButtonProps) {
                 dark:hover:bg-slate-800 dark:hover:border-slate-500
             "
             >
-            <span
-                className="
-                    text-slate-500
-                    dark:text-slate-400
-                "
-            >
-                ↗
-            </span>
-                <span>Поделиться</span>
+                Поделиться
+                <Share
+                    size={14}
+                    className="text-slate-500 dark:text-slate-400"
+                />
             </button>
 
             {status === "copied" && (
@@ -80,5 +77,4 @@ export function ShareButton({title, description}: ShareButtonProps) {
             )}
         </div>
     );
-
 }

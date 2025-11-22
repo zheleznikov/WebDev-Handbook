@@ -26,7 +26,6 @@ export function NotesSearch({ notes }: Props) {
 
         if (!q) return notes;
 
-        // режим поиска по тегу: "#async"
         if (q.startsWith("#")) {
             const tagQuery = q.slice(1); // убираем "#"
 
@@ -36,7 +35,6 @@ export function NotesSearch({ notes }: Props) {
             });
         }
 
-        // обычный поиск
         return notes.filter((note) => {
             const title = (note.meta.title || note.slug).toLowerCase();
             const description = (note.meta.description || "").toLowerCase();
