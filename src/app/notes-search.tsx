@@ -1,12 +1,14 @@
-"use client";
+'use client';
 
-import Link from "next/link";
-import { useMemo, useState } from "react";
+import Link from 'next/link';
+import {useMemo, useState} from 'react';
+import {Card, Label, Text, TextInput} from '@gravity-ui/uikit';
 
 type NoteMeta = {
     title?: string;
     description?: string;
     tags?: string[];
+    [key: string]: any;
 };
 
 type Note = {
@@ -18,11 +20,8 @@ type Props = {
     notes: Note[];
 };
 
-export function NotesSearch({ notes }: Props) {
-
-
-
-    const [query, setQuery] = useState("");
+export function NotesSearch({notes}: Props) {
+    const [query, setQuery] = useState('');
 
     const filteredNotes = useMemo(() => {
         const raw = query.trim().toLowerCase();
@@ -32,21 +31,21 @@ export function NotesSearch({ notes }: Props) {
 
         // Теги: все слова, начинающиеся с "#"
         const tagFilters = tokens
-            .filter((t) => t.startsWith("#"))
-            .map((t) => t.slice(1))       // убираем "#"
-            .filter(Boolean);             // убираем пустые строки типа "#"
+            .filter((t) => t.startsWith('#'))
+            .map((t) => t.slice(1))
+            .filter(Boolean);
 
         // Остальной текст — обычный поисковый запрос
         const textQuery = tokens
-            .filter((t) => !t.startsWith("#"))
-            .join(" ")
+            .filter((t) => !t.startsWith('#'))
+            .join(' ')
             .trim();
 
         return notes.filter((note) => {
             const title = (note.meta.title || note.slug).toLowerCase();
-            const description = (note.meta.description || "").toLowerCase();
+            const description = (note.meta.description || '').toLowerCase();
             const noteTags = (note.meta.tags || []).map((t) => t.toLowerCase());
-            const tagsString = noteTags.join(" ");
+            const tagsString = noteTags.join(' ');
             const slug = note.slug.toLowerCase();
 
             const matchesTags =
@@ -66,146 +65,124 @@ export function NotesSearch({ notes }: Props) {
 
     const allTags = useMemo(() => {
         const tags = new Set<string>();
-        notes.forEach(note => {
-            (note.meta.tags || []).forEach(t => tags.add(t));
+        notes.forEach((note) => {
+            (note.meta.tags || []).forEach((t) => tags.add(t));
         });
         return Array.from(tags).sort();
     }, [notes]);
 
-
     const tagSuggestions = useMemo(() => {
-        if (!query.startsWith("#")) return [];
+        if (!query.startsWith('#')) return [];
 
         const clean = query.slice(1).toLowerCase();
 
-        return allTags.filter(tag =>
-            tag.toLowerCase().startsWith(clean)
+        return allTags.filter((tag) =>
+            tag.toLowerCase().startsWith(clean),
         );
     }, [query, allTags]);
 
-
     return (
         <div className="space-y-4">
-
             {/* Поиск */}
             <div className="relative">
-                <input
+                <TextInput
                     type="text"
+                    size="l"
+                    view="normal"
+                    hasClear
                     placeholder="Поиск по заметкам и тегам..."
                     value={query}
-                    onChange={(e) => setQuery(e.target.value)}
-                    className="
-                    w-full rounded-xl border border-slate-300
-                    bg-white/80 text-slate-900
-                    px-4 py-2.5 text-sm shadow-sm
-                    placeholder:text-slate-400
-
-                    dark:bg-slate-900/60 dark:border-slate-700
-                    dark:text-slate-100 dark:placeholder:text-slate-500
-
-                    focus:outline-none focus:ring-2 focus:ring-blue-500/60
-                    focus:border-blue-500
-                    transition-colors
-                "
+                    onUpdate={setQuery}
+                    qa="notes-search-input"
                 />
-                {query && (
-                    <button
-                        type="button"
-                        onClick={() => setQuery("")}
-                        className="
-                        absolute right-3 top-1/2 -translate-y-1/2
-                        text-xs text-slate-400 hover:text-slate-600
 
-                        dark:text-slate-500 dark:hover:text-slate-300
-                        transition-colors
-                    "
-                    >
-                        Очистить
-                    </button>
-                )}
                 {tagSuggestions.length > 0 && (
-                    <div
+                    <Card
+                        view="outlined"
                         className="
-                absolute left-0 right-0 mt-1
-                bg-white dark:bg-slate-800
-                border border-slate-200 dark:border-slate-700
-                rounded-xl shadow-lg z-20
-                max-h-60 overflow-y-auto
-            "
+                            absolute left-0 right-0 mt-1
+                            z-20 max-h-60 overflow-y-auto
+                        "
                     >
-                        {tagSuggestions.map(tag => (
+                        {tagSuggestions.map((tag) => (
                             <button
                                 key={tag}
+                                type="button"
                                 onClick={() => setQuery(`#${tag}`)}
                                 className="
-                        w-full text-left px-4 py-2 text-sm
-                        hover:bg-slate-100 dark:hover:bg-slate-700
-                        text-slate-700 dark:text-slate-200
-                    "
+                                    w-full text-left px-4 py-2 text-sm
+                                    hover:bg-slate-100 dark:hover:bg-slate-700
+                                "
                             >
-                                #{tag}
+                                <Text variant="body-2">#{tag}</Text>
                             </button>
                         ))}
-                    </div>
+                    </Card>
                 )}
             </div>
 
             {/* Список заметок */}
             <ul className="space-y-3">
                 {filteredNotes.length === 0 && (
-                    <li className="text-sm text-slate-400 dark:text-slate-500">
-                        Ничего не найдено по запросу «{query}».
+                    <li>
+                        <Text
+                            variant="body-2"
+                            color="secondary"
+                        >
+                            Ничего не найдено по запросу «{query}».
+                        </Text>
                     </li>
                 )}
 
                 {filteredNotes.map((note) => (
                     <li key={note.slug}>
-                        <Link
-                            href={`/notes/${note.slug}`}
-                            className="
-                            block rounded-xl bg-white px-5 py-4 shadow-sm
-                            border border-slate-200
-                            hover:shadow-md hover:border-slate-300
-                            transition-all duration-150
+                        <Link href={`/notes/${note.slug}`} className="block">
+                            <Card
+                                view="outlined"
+                                type="container"
+                                className="
+                                    px-5 py-4
+                                    hover:shadow-md
+                                    transition-shadow
+                                "
+                            >
+                                <Text
+                                    as="h2"
+                                    variant="subheader-3"
+                                >
+                                    {note.meta.title || note.slug}
+                                </Text>
 
-                            dark:bg-slate-900 dark:border-slate-700
-                            dark:hover:border-slate-600 dark:hover:shadow-md
-                        "
-                        >
-                            <h2 className="text-base font-medium text-slate-900 dark:text-slate-100">
-                                {note.meta.title || note.slug}
-                            </h2>
+                                {note.meta.description && (
+                                    <Text
+                                        variant="body-2"
+                                        color="secondary"
+                                        className="mt-1 line-clamp-2"
+                                    >
+                                        {note.meta.description}
+                                    </Text>
+                                )}
 
-                            {note.meta.description && (
-                                <p className="text-sm text-slate-500 dark:text-slate-400 mt-1 line-clamp-2">
-                                    {note.meta.description}
-                                </p>
-                            )}
-
-                            {note.meta.tags && note.meta.tags.length > 0 && (
-                                <div className="mt-3 flex flex-wrap gap-1.5">
-                                    {note.meta.tags.map((tag) => (
-                                        <span
-                                            key={tag}
-                                            className="
-                                            inline-flex items-center rounded-full
-                                            border border-emerald-100 bg-emerald-50
-                                            text-emerald-700 px-2.5 py-0.5 text-xs font-medium
-
-                                            dark:border-emerald-900/40 dark:bg-emerald-900/20
-                                            dark:text-emerald-300
-                                        "
-                                        >
-                                        {tag}
-                                    </span>
-                                    ))}
-                                </div>
-                            )}
+                                {note.meta.tags &&
+                                    note.meta.tags.length > 0 && (
+                                        <div className="mt-3 flex flex-wrap gap-1.5">
+                                            {note.meta.tags.map((tag) => (
+                                                <Label
+                                                    key={tag}
+                                                    size="xs"
+                                                    theme="info"
+                                                    interactive
+                                                >
+                                                    {tag}
+                                                </Label>
+                                            ))}
+                                        </div>
+                                    )}
+                            </Card>
                         </Link>
                     </li>
                 ))}
             </ul>
         </div>
     );
-
 }

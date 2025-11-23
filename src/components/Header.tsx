@@ -1,48 +1,60 @@
 "use client";
 
 import Link from "next/link";
-import { usePathname } from "next/navigation";
-import ThemeToggle from "./ThemeToggle";
+import {usePathname} from "next/navigation";
+
+
+import {Card, Flex, Text} from "@gravity-ui/uikit";
+import React from "react";
+import ThemeToggle from "@/components/ThemeToggle";
 
 export default function Header() {
     const pathname = usePathname();
     const isHome = pathname === "/";
 
     return (
-        <header
+        <Card
+            view="filled"
             className="
-        fixed top-0 left-0 right-0 z-30
-        backdrop-blur-md
-        bg-white/70 border-b border-slate-200
-        dark:bg-slate-900/80 dark:border-slate-700
-        px-4 sm:px-6 py-3
-      "
+                fixed top-0 left-0 right-0 z-30
+                backdrop-blur-md
+                px-4 sm:px-6 py-3
+                border-b
+            "
         >
-            <div className="max-w-4xl mx-auto flex items-center justify-between gap-4">
+            <Flex
+                justifyContent="space-between"
+                alignItems="center"
+                className="max-w-4xl mx-auto gap-4"
+            >
 
-                {/* Левая часть — либо кнопка, либо заглушка */}
+                {/* Левая часть — кнопка "На главную" или пустой блок */}
                 {isHome ? (
                     <div className="w-[110px]" />
                 ) : (
                     <Link
                         href="/"
                         className="
-              w-[110px] inline-block text-sm font-medium
-              text-slate-700 hover:text-slate-900
-              dark:text-slate-200 dark:hover:text-white
-              transition
-            "
+                            w-[110px] inline-block
+                            text-sm
+                            text-slate-700 hover:text-slate-900
+                            transition
+                        "
                     >
                         ← На главную
                     </Link>
                 )}
 
-                {/* Правая часть: текст + переключатель темы */}
-                <div className="flex items-center gap-3 text-sm text-slate-500 dark:text-slate-300">
-                    <span>WebDev Handbook</span>
+                {/* Правая часть */}
+                <Flex alignItems="center" gap={3}>
+                    <Text variant="body-2" color="secondary">
+                        WebDev Handbook
+                    </Text>
+
+                    {/* Переключатель темы Gravity UI */}
                     <ThemeToggle />
-                </div>
-            </div>
-        </header>
+                </Flex>
+            </Flex>
+        </Card>
     );
 }

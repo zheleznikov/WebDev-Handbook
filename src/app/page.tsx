@@ -1,10 +1,11 @@
-import { getNoteSlugs, getNoteBySlug } from "@/lib/notes";
-import { NotesSearch } from "./notes-search";
+import {Text} from '@gravity-ui/uikit';
+import {getNoteSlugs, getNoteBySlug} from '@/lib/notes';
+import { NotesSearch } from "@/app/notes-search";
 
 export default function HomePage() {
     const slugs = getNoteSlugs();
     const notes = slugs.map((file) => {
-        const slug = file.replace(/\.md$/, "");
+        const slug = file.replace(/\.md$/, '');
         return getNoteBySlug(slug);
     });
 
@@ -20,24 +21,17 @@ export default function HomePage() {
             <div className="max-w-3xl mx-auto">
                 {/* Заголовок */}
                 <header className="mb-8">
-                    <h1
-                        className="
-                            text-4xl font-bold tracking-tight
-                            text-slate-900
-                            dark:text-slate-50
-                        "
-                    >
+                    <Text variant="display-3" as="h1">
                         Справочник по JavaScript
-                    </h1>
-                    <p
-                        className="
-                            mt-2
-                            text-slate-500
-                            dark:text-slate-400
-                        "
+                    </Text>
+
+                    <Text
+                        variant="body-2"
+                        color="secondary"
+                        className="mt-2"
                     >
                         Для подготовки к собесу
-                    </p>
+                    </Text>
                 </header>
 
                 <NotesSearch notes={notes} />

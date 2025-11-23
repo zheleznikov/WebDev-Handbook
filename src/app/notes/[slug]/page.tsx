@@ -7,6 +7,7 @@ import rehypeStringify from 'rehype-stringify';
 import Link from "next/link";
 import { ShareButton } from "@/components/ShareButton";
 import { CalendarDays, User } from "lucide-react";
+import {Card, Label, Text} from "@gravity-ui/uikit";
 
 type NotePageProps = {
     params: Promise<{ slug: string }>;
@@ -51,49 +52,42 @@ export default async function NotePage({ params }: NotePageProps) {
             transition-colors
         "
         >
-
-
             <div className="mx-auto w-full px-0 sm:px-6 py-8 sm:max-w-3xl">
-
-            {/* Заголовок страницы */}
+                {/* Заголовок страницы */}
                 <header className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                     {/* Левая колонка: заголовок + описание + теги */}
                     <div className="flex-1">
-                        <h1
-                            className="
-                text-xs font-medium uppercase tracking-[0.2em]
-                text-slate-400 mb-1
-                dark:text-slate-500
-                pl-4
-            "
+                        <Text
+                            as="h1"
+                            className="pl-4"
                         >
-                            {`${note.meta.title || note.slug}`}
-                        </h1>
+                            {note.meta.title || note.slug}
+                        </Text>
 
                         {note.meta.description && (
-                            <p className="mt-2 text-sm text-slate-500 dark:text-slate-400">
+                            <Text
+                                as="p"
+                                variant="body-2"
+                                color="secondary"
+                                className="mt-2"
+                            >
                                 {note.meta.description}
-                            </p>
+                            </Text>
                         )}
 
                         {currentTags.length > 0 && (
                             <div className="mt-3 flex flex-wrap gap-1.5 pl-4">
                                 {currentTags.map((tag) => (
-                                    <span
+                                    <Label
                                         key={tag}
+                                        size="xs"
+                                        theme="info"
                                         className="
-                            inline-flex items-center rounded-full
-                            border border-emerald-100 bg-emerald-50
-                            px-2.5 py-0.5 text-xs font-medium
-                            text-emerald-700
-
-                            dark:border-emerald-900/40
-                            dark:bg-emerald-900/20
-                            dark:text-emerald-300
-                        "
+                                        cursor-default
+                                    "
                                     >
-                        {tag}
-                    </span>
+                                        {tag}
+                                    </Label>
                                 ))}
                             </div>
                         )}
@@ -108,11 +102,13 @@ export default async function NotePage({ params }: NotePageProps) {
                     </div>
                 </header>
 
-
-                <div
+                {/* Основной контент заметки */}
+                <Card
+                    view="outlined"
                     className="
-                    relative rounded-2xl border border-slate-200 bg-white/90 shadow-sm
-                    dark:border-slate-700 dark:bg-slate-900/90 dark:shadow-md
+                    relative rounded-2xl
+                    dark:border-slate-700 dark:bg-slate-900/90
+                    shadow-sm dark:shadow-md
                     transition-colors
                 "
                 >
@@ -122,36 +118,49 @@ export default async function NotePage({ params }: NotePageProps) {
                             dangerouslySetInnerHTML={{ __html: contentHtml }}
                         />
                     </div>
+
+                    {/* Подвал карточки: дата слева, автор справа */}
                     <div
                         className="
-        flex items-center justify-between
-        px-4 sm:px-6 py-4 border-t
-        border-slate-200 dark:border-slate-700
-        text-sm text-slate-500 dark:text-slate-400
-    "
+                        flex items-center justify-between
+                        px-4 sm:px-6 py-4 border-t
+                        border-slate-200 dark:border-slate-700
+                        text-sm text-slate-500 dark:text-slate-400
+                    "
                     >
-                        {note.meta.date && (
+                        {note.meta.date ? (
                             <div className="flex items-center gap-1.5">
                                 <CalendarDays className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                                <span>{note.meta.date}</span>
+                                <Text variant="body-3" color="secondary">
+                                    {note.meta.date}
+                                </Text>
                             </div>
+                        ) : (
+                            <span />
                         )}
 
                         {note.meta.author && (
                             <div className="flex items-center gap-1.5">
                                 <User className="h-4 w-4 text-slate-400 dark:text-slate-500" />
-                                <span>{note.meta.author}</span>
+                                <Text variant="body-3" color="secondary">
+                                    {note.meta.author}
+                                </Text>
                             </div>
                         )}
                     </div>
+                </Card>
 
-                </div>
-
+                {/* Блок похожих заметок */}
                 {relatedNotes.length > 0 && (
                     <section className="mt-10 border-t border-slate-200 dark:border-slate-700 pt-6 pl-8 sm:pl-0">
-                        <h2 className="text-sm font-semibold text-slate-700 dark:text-slate-200 mb-3">
+                        <Text
+                            as="h2"
+                            variant="body-2"
+                            className="font-semibold mb-3"
+                        >
                             Другие материалы по теме
-                        </h2>
+                        </Text>
+
                         <ul className="space-y-2">
                             {relatedNotes.map((related) => (
                                 <li key={related.slug}>
@@ -172,5 +181,6 @@ export default async function NotePage({ params }: NotePageProps) {
             </div>
         </main>
     );
+
 
 }
