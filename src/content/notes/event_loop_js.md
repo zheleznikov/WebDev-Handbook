@@ -1,6 +1,8 @@
 ---
 title: "Event Loop"
 slug: "event_loop"
+author: Сергей Железников
+date: 22-11-2025
 tags:
 - async
 - event_loop

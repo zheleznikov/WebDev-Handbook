@@ -3,11 +3,12 @@ import path from "node:path";
 import matter from "gray-matter";
 
 const NOTES_DIR = path.join(process.cwd(), "src/content/notes");
-// если папка другая — подставь свой путь
 
 export type NoteMeta = {
     title?: string;
     slug?: string;
+    author?: string;
+    date?: string;
     [key: string]: any;
 };
 
@@ -33,6 +34,6 @@ export function getNoteBySlug(slug: string): Note {
         slug: cleanSlug,
         meta: data as NoteMeta,
         tags: Array.isArray(data.tags) ? data.tags : [],
-        content,
+        content
     };
 }

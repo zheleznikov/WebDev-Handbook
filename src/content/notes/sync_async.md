@@ -1,6 +1,8 @@
 ---
 title: "Синхронный и асинхронный код"
 slug: "sync_async"
+author: Сергей Железников
+date: 22-11-2025
 tags:
 - async
 ---

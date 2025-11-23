@@ -49,12 +49,10 @@ export function NotesSearch({ notes }: Props) {
             const tagsString = noteTags.join(" ");
             const slug = note.slug.toLowerCase();
 
-            // 1) Проверяем теги (AND: заметка должна содержать все указанные теги)
             const matchesTags =
                 tagFilters.length === 0 ||
                 tagFilters.every((tag) => noteTags.includes(tag));
 
-            // 2) Проверяем текст
             const matchesText =
                 !textQuery ||
                 title.includes(textQuery) ||

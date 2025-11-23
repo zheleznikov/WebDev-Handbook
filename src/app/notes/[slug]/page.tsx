@@ -6,6 +6,7 @@ import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
 import Link from "next/link";
 import { ShareButton } from "@/components/ShareButton";
+import { CalendarDays, User } from "lucide-react";
 
 type NotePageProps = {
     params: Promise<{ slug: string }>;
@@ -115,14 +116,35 @@ export default async function NotePage({ params }: NotePageProps) {
                     transition-colors
                 "
                 >
-
-
                     <div className="px-4 sm:px-6 py-5">
                         <article
                             className="prose-notes"
                             dangerouslySetInnerHTML={{ __html: contentHtml }}
                         />
                     </div>
+                    <div
+                        className="
+        flex items-center justify-between
+        px-4 sm:px-6 py-4 border-t
+        border-slate-200 dark:border-slate-700
+        text-sm text-slate-500 dark:text-slate-400
+    "
+                    >
+                        {note.meta.date && (
+                            <div className="flex items-center gap-1.5">
+                                <CalendarDays className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                                <span>{note.meta.date}</span>
+                            </div>
+                        )}
+
+                        {note.meta.author && (
+                            <div className="flex items-center gap-1.5">
+                                <User className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                                <span>{note.meta.author}</span>
+                            </div>
+                        )}
+                    </div>
+
                 </div>
 
                 {relatedNotes.length > 0 && (

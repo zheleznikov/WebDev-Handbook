@@ -3,6 +3,8 @@ title: "Асинхронность в JavaScript"
 slug: "async_js"
 tags: 
     - async
+author: Сергей Железников
+date: 22-11-2025
 ---
 # Асинхронность в JavaScript
 
