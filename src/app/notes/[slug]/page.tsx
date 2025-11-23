@@ -181,6 +181,4 @@ export default async function NotePage({ params }: NotePageProps) {
             </div>
         </main>
     );
-
-
 }

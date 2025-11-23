@@ -121,7 +121,6 @@ export function NotesSearch({notes}: Props) {
                 )}
             </div>
 
-            {/* Список заметок */}
             <ul className="space-y-3">
                 {filteredNotes.length === 0 && (
                     <li>

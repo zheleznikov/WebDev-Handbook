@@ -19,18 +19,9 @@ export default function HomePage() {
             "
         >
             <div className="max-w-3xl mx-auto">
-                {/* Заголовок */}
                 <header className="mb-8">
                     <Text variant="display-3" as="h1">
-                        Справочник по JavaScript
-                    </Text>
-
-                    <Text
-                        variant="body-2"
-                        color="secondary"
-                        className="mt-2"
-                    >
-                        Для подготовки к собесу
+                        Справочник по JS
                     </Text>
                 </header>
 

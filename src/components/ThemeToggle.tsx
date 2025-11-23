@@ -58,7 +58,6 @@ export default function ThemeToggle() {
             <span aria-hidden="true" className="mr-1">
                 {isDark ? "🌙" : "☀️"}
             </span>
-            {isDark ? "Тёмная" : "Светлая"}
         </Button>
     );
 }

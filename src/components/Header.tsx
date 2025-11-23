@@ -28,7 +28,6 @@ export default function Header() {
                 className="max-w-4xl mx-auto gap-4"
             >
 
-                {/* Левая часть — кнопка "На главную" или пустой блок */}
                 {isHome ? (
                     <div className="w-[110px]" />
                 ) : (
@@ -45,13 +44,10 @@ export default function Header() {
                     </Link>
                 )}
 
-                {/* Правая часть */}
                 <Flex alignItems="center" gap={3}>
                     <Text variant="body-2" color="secondary">
                         WebDev Handbook
                     </Text>
-
-                    {/* Переключатель темы Gravity UI */}
                     <ThemeToggle />
                 </Flex>
             </Flex>

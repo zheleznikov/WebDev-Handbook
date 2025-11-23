@@ -20,7 +20,6 @@ export default function RootLayout({ children }: { children: React.ReactNode }) 
             suppressHydrationWarning
         >
         <body>
-        {/* Gravity UI управляет темой внутри */}
         <ThemeProvider theme="system" lang="ru">
             <div
                 className="

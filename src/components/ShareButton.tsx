@@ -1,8 +1,8 @@
-// src/components/ShareButton.tsx
 "use client";
 
-import { useState } from "react";
-import { Share, Share2 } from "lucide-react";
+import {useState} from "react";
+import {Button, Text, Tooltip} from "@gravity-ui/uikit";
+import {Share2, CheckCircle, XCircle} from "lucide-react";
 
 type ShareButtonProps = {
     title: string;
@@ -16,7 +16,7 @@ export function ShareButton({title, description}: ShareButtonProps) {
         try {
             const url = window.location.href;
 
-            // Если доступен Web Share API
+            // Web Share API
             if (navigator.share) {
                 await navigator.share({
                     title,
@@ -27,53 +27,61 @@ export function ShareButton({title, description}: ShareButtonProps) {
                 return;
             }
 
-            // Фолбэк: копируем ссылку
+            // Copy fallback
             await navigator.clipboard.writeText(url);
             setStatus("copied");
-            setTimeout(() => setStatus("idle"), 2000);
+            setTimeout(() => setStatus("idle"), 2200);
         } catch (e) {
             console.error(e);
             setStatus("error");
-            setTimeout(() => setStatus("idle"), 2000);
+            setTimeout(() => setStatus("idle"), 2200);
         }
     }
 
+    const iconColor = "var(--g-color-text-secondary)";
+
     return (
         <div className="flex items-center gap-2">
-            <button
-                type="button"
-                onClick={handleClick}
-                className="
-                inline-flex items-center gap-1.5
-                rounded-full border border-slate-200 bg-white/80
-                px-3 py-1.5 text-xs font-medium text-slate-700
-                shadow-sm
-                hover:border-slate-300 hover:bg-white
-                active:scale-[0.99]
-                transition
-
-                dark:border-slate-600 dark:bg-slate-800/70
-                dark:text-slate-300
-                dark:hover:bg-slate-800 dark:hover:border-slate-500
-            "
+            <Tooltip
+                content={
+                    status === "copied"
+                        ? "Ссылка скопирована"
+                        : status === "error"
+                            ? "Не удалось поделиться"
+                            : "Поделиться"
+                }
             >
-                Поделиться
-                <Share
-                    size={14}
-                    className="text-slate-500 dark:text-slate-400"
-                />
-            </button>
+                <Button
+                    size="s"
+                    view="flat"
+                    onClick={handleClick}
+                    disabled={status === "copied"}
+                >
+                    {status === "idle" && (
+                        <Share2 size={16} strokeWidth={1.75} color={iconColor} />
+                    )}
 
+                    {status === "copied" && (
+                        <CheckCircle size={16} strokeWidth={1.75} color="var(--g-color-text-positive)" />
+                    )}
+
+                    {status === "error" && (
+                        <XCircle size={16} strokeWidth={1.75} color="var(--g-color-text-danger)" />
+                    )}
+                </Button>
+            </Tooltip>
+
+            {/* Текст статуса рядом */}
             {status === "copied" && (
-                <span className="text-[11px] text-emerald-600 dark:text-emerald-400">
-                Ссылка скопирована
-            </span>
+                <Text variant="body-3" color="positive">
+                    Ссылка скопирована
+                </Text>
             )}
 
             {status === "error" && (
-                <span className="text-[11px] text-red-500 dark:text-red-400">
-                Не удалось поделиться
-            </span>
+                <Text variant="body-3" color="danger">
+                    Не удалось поделиться
+                </Text>
             )}
         </div>
     );
