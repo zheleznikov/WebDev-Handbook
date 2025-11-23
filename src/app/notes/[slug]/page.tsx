@@ -46,21 +46,14 @@ export default async function NotePage({ params }: NotePageProps) {
 
     return (
         <main
-            className="
-            min-h-screen bg-neutral-50
-            dark:bg-slate-950
-            transition-colors
-        "
+            className="min-h-screen transition-colors"
         >
             <div className="mx-auto w-full px-0 sm:px-6 py-8 sm:max-w-3xl">
                 {/* Заголовок страницы */}
                 <header className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
                     {/* Левая колонка: заголовок + описание + теги */}
                     <div className="flex-1">
-                        <Text
-                            as="h1"
-                            className="pl-4"
-                        >
+                        <Text as="h1" variant="display-2" className="pl-4">
                             {note.meta.title || note.slug}
                         </Text>
 
@@ -69,7 +62,7 @@ export default async function NotePage({ params }: NotePageProps) {
                                 as="p"
                                 variant="body-2"
                                 color="secondary"
-                                className="mt-2"
+                                className="mt-2 pl-4"
                             >
                                 {note.meta.description}
                             </Text>
@@ -82,9 +75,7 @@ export default async function NotePage({ params }: NotePageProps) {
                                         key={tag}
                                         size="xs"
                                         theme="info"
-                                        className="
-                                        cursor-default
-                                    "
+                                        className="cursor-default"
                                     >
                                         {tag}
                                     </Label>
@@ -106,31 +97,30 @@ export default async function NotePage({ params }: NotePageProps) {
                 <Card
                     view="outlined"
                     className="
-                    relative rounded-2xl
-                    dark:border-slate-700 dark:bg-slate-900/90
-                    shadow-sm dark:shadow-md
-                    transition-colors
-                "
+                        relative rounded-2xl
+                        shadow-sm
+                    "
                 >
                     <div className="px-4 sm:px-6 py-5">
                         <article
                             className="prose-notes"
-                            dangerouslySetInnerHTML={{ __html: contentHtml }}
+                            dangerouslySetInnerHTML={{__html: contentHtml}}
                         />
                     </div>
 
                     {/* Подвал карточки: дата слева, автор справа */}
                     <div
                         className="
-                        flex items-center justify-between
-                        px-4 sm:px-6 py-4 border-t
-                        border-slate-200 dark:border-slate-700
-                        text-sm text-slate-500 dark:text-slate-400
-                    "
+                            flex items-center justify-between
+                            px-4 sm:px-6 py-4 text-sm
+                        "
+                        style={{
+                            borderTop: "1px solid var(--g-color-line-generic)",
+                        }}
                     >
                         {note.meta.date ? (
                             <div className="flex items-center gap-1.5">
-                                <CalendarDays className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                                <CalendarDays className="h-4 w-4" />
                                 <Text variant="body-3" color="secondary">
                                     {note.meta.date}
                                 </Text>
@@ -141,7 +131,7 @@ export default async function NotePage({ params }: NotePageProps) {
 
                         {note.meta.author && (
                             <div className="flex items-center gap-1.5">
-                                <User className="h-4 w-4 text-slate-400 dark:text-slate-500" />
+                                <User className="h-4 w-4" />
                                 <Text variant="body-3" color="secondary">
                                     {note.meta.author}
                                 </Text>
@@ -152,7 +142,12 @@ export default async function NotePage({ params }: NotePageProps) {
 
                 {/* Блок похожих заметок */}
                 {relatedNotes.length > 0 && (
-                    <section className="mt-10 border-t border-slate-200 dark:border-slate-700 pt-6 pl-8 sm:pl-0">
+                    <section
+                        className="mt-10 pt-6 pl-8 sm:pl-0"
+                        style={{
+                            borderTop: "1px solid var(--g-color-line-generic)",
+                        }}
+                    >
                         <Text
                             as="h2"
                             variant="body-2"
@@ -166,10 +161,10 @@ export default async function NotePage({ params }: NotePageProps) {
                                 <li key={related.slug}>
                                     <Link
                                         href={`/notes/${related.slug}`}
-                                        className="
-                                        text-sm text-blue-600 hover:underline
-                                        dark:text-blue-400
-                                    "
+                                        className="text-sm hover:underline"
+                                        style={{
+                                            color: "var(--g-color-text-link)",
+                                        }}
                                     >
                                         {related.meta.title || related.slug}
                                     </Link>

@@ -96,29 +96,29 @@ export function NotesSearch({notes}: Props) {
                     qa="notes-search-input"
                 />
 
-                {tagSuggestions.length > 0 && (
-                    <Card
-                        view="outlined"
-                        className="
-                            absolute left-0 right-0 mt-1
-                            z-20 max-h-60 overflow-y-auto
-                        "
-                    >
-                        {tagSuggestions.map((tag) => (
-                            <button
-                                key={tag}
-                                type="button"
-                                onClick={() => setQuery(`#${tag}`)}
-                                className="
-                                    w-full text-left px-4 py-2 text-sm
-                                    hover:bg-slate-100 dark:hover:bg-slate-700
-                                "
-                            >
-                                <Text variant="body-2">#{tag}</Text>
-                            </button>
-                        ))}
-                    </Card>
-                )}
+                {/*{tagSuggestions.length > 0 && (*/}
+                {/*    <Card*/}
+                {/*        view="outlined"*/}
+                {/*        className="*/}
+                {/*            absolute left-0 right-0 mt-1*/}
+                {/*            z-1000 max-h-60 overflow-y-auto*/}
+                {/*        "*/}
+                {/*    >*/}
+                {/*        {tagSuggestions.map((tag) => (*/}
+                {/*            <button*/}
+                {/*                key={tag}*/}
+                {/*                type="button"*/}
+                {/*                onClick={() => setQuery(`#${tag}`)}*/}
+                {/*                className="*/}
+                {/*                    w-full text-left px-4 py-2 text-sm*/}
+                {/*                    hover:bg-slate-100 dark:hover:bg-slate-700*/}
+                {/*                "*/}
+                {/*            >*/}
+                {/*                <Text variant="body-2">#{tag}</Text>*/}
+                {/*            </button>*/}
+                {/*        ))}*/}
+                {/*    </Card>*/}
+                {/*)}*/}
             </div>
 
             <ul className="space-y-3">

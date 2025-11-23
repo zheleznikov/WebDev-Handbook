@@ -48,7 +48,7 @@ export default function Header() {
                     <Text variant="body-2" color="secondary">
                         WebDev Handbook
                     </Text>
-                    <ThemeToggle />
+                    {/*<ThemeToggle />*/}
                 </Flex>
             </Flex>
         </Card>
