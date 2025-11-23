@@ -4,10 +4,10 @@ import remarkParse from 'remark-parse';
 import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
-import Link from "next/link";
 import { ShareButton } from "@/components/ShareButton";
-import { CalendarDays, User } from "lucide-react";
-import {Card, Label, Text} from "@gravity-ui/uikit";
+import { Card, Label, Link, Text, User } from "@gravity-ui/uikit";
+import { Calendar } from "@gravity-ui/icons";
+import {PersonFill} from '@gravity-ui/icons';
 
 type NotePageProps = {
     params: Promise<{ slug: string }>;
@@ -45,13 +45,9 @@ export default async function NotePage({ params }: NotePageProps) {
     const contentHtml = processed.toString();
 
     return (
-        <main
-            className="min-h-screen transition-colors"
-        >
+        <main className="min-h-screen transition-colors">
             <div className="mx-auto w-full px-0 sm:px-6 py-8 sm:max-w-3xl">
-                {/* Заголовок страницы */}
                 <header className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                    {/* Левая колонка: заголовок + описание + теги */}
                     <div className="flex-1">
                         <Text as="h1" variant="display-2" className="pl-4">
                             {note.meta.title || note.slug}
@@ -85,7 +81,7 @@ export default async function NotePage({ params }: NotePageProps) {
                     </div>
 
                     {/* Правая колонка: Share button */}
-                    <div className="pl-4 sm:pl-0 sm:pt-1">
+                    <div className="pl-4 sm:pl-0 sm:pt-4">
                         <ShareButton
                             title={note.meta.title || note.slug}
                             description={note.meta.description}
@@ -120,7 +116,7 @@ export default async function NotePage({ params }: NotePageProps) {
                     >
                         {note.meta.date ? (
                             <div className="flex items-center gap-1.5">
-                                <CalendarDays className="h-4 w-4" />
+                                <Calendar className="h-4 w-4" />
                                 <Text variant="body-3" color="secondary">
                                     {note.meta.date}
                                 </Text>
@@ -131,7 +127,7 @@ export default async function NotePage({ params }: NotePageProps) {
 
                         {note.meta.author && (
                             <div className="flex items-center gap-1.5">
-                                <User className="h-4 w-4" />
+                                <PersonFill className="h-4 w-4" />
                                 <Text variant="body-3" color="secondary">
                                     {note.meta.author}
                                 </Text>
@@ -140,17 +136,13 @@ export default async function NotePage({ params }: NotePageProps) {
                     </div>
                 </Card>
 
-                {/* Блок похожих заметок */}
                 {relatedNotes.length > 0 && (
                     <section
-                        className="mt-10 pt-6 pl-8 sm:pl-0"
-                        style={{
-                            borderTop: "1px solid var(--g-color-line-generic)",
-                        }}
+                        className="mt-4 pt-6 pl-8 sm:pl-0"
                     >
                         <Text
                             as="h2"
-                            variant="body-2"
+                            variant="body-3"
                             className="font-semibold mb-3"
                         >
                             Другие материалы по теме
@@ -160,11 +152,8 @@ export default async function NotePage({ params }: NotePageProps) {
                             {relatedNotes.map((related) => (
                                 <li key={related.slug}>
                                     <Link
+                                        type={"primary"}
                                         href={`/notes/${related.slug}`}
-                                        className="text-sm hover:underline"
-                                        style={{
-                                            color: "var(--g-color-text-link)",
-                                        }}
                                     >
                                         {related.meta.title || related.slug}
                                     </Link>

@@ -1,12 +1,11 @@
 "use client";
 
-import Link from "next/link";
-import {usePathname} from "next/navigation";
+import { usePathname } from "next/navigation";
 
 
-import {Card, Flex, Text} from "@gravity-ui/uikit";
+import { Card, Flex, Link, Text } from "@gravity-ui/uikit";
 import React from "react";
-import ThemeToggle from "@/components/ThemeToggle";
+import { HeaderThemeToggle } from "@/components/HeaderThemeToggle";
 
 export default function Header() {
     const pathname = usePathname();
@@ -14,7 +13,6 @@ export default function Header() {
 
     return (
         <Card
-            view="filled"
             className="
                 fixed top-0 left-0 right-0 z-30
                 backdrop-blur-md
@@ -48,8 +46,8 @@ export default function Header() {
                     <Text variant="body-2" color="secondary">
                         WebDev Handbook
                     </Text>
-                    {/*<ThemeToggle />*/}
                 </Flex>
+                <HeaderThemeToggle />
             </Flex>
         </Card>
     );

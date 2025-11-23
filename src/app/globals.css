@@ -29,7 +29,6 @@
 @utility prose-notes {
     @apply prose prose-slate;
 
-    /* Цвета типографики */
     --tw-prose-body: var(--color-slate-800);
     --tw-prose-headings: var(--color-slate-900);
     --tw-prose-links: var(--color-blue-600);
@@ -155,7 +154,7 @@
     --tw-prose-body: var(--color-slate-300);
     --tw-prose-headings: var(--color-slate-100);
     --tw-prose-links: var(--color-blue-400);
-    --tw-prose-bold: var(--color-slate-100);    /* вот это добавляем */
+    --tw-prose-bold: var(--color-slate-100);
     --tw-prose-quotes: var(--color-slate-400);
 
 & strong,
@@ -163,3 +162,5 @@
       color: var(--tw-prose-bold);
   }
 }
+
+

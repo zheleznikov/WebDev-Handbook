@@ -13,9 +13,7 @@ export default function HomePage() {
         <main
             className="
                 min-h-screen
-                bg-stone-50 px-4 py-12
-                dark:bg-slate-950
-                transition-colors
+            px-4 py-12
             "
         >
             <div className="max-w-3xl mx-auto">

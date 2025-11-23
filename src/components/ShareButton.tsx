@@ -1,8 +1,8 @@
 "use client";
 
-import {useState} from "react";
-import {Button, Text, Tooltip} from "@gravity-ui/uikit";
-import {Share2, CheckCircle, XCircle} from "lucide-react";
+import { useState } from "react";
+import { Button, Tooltip } from "@gravity-ui/uikit";
+import { ArrowShapeTurnUpRight } from '@gravity-ui/icons';
 
 type ShareButtonProps = {
     title: string;
@@ -38,7 +38,6 @@ export function ShareButton({title, description}: ShareButtonProps) {
         }
     }
 
-    const iconColor = "var(--g-color-text-secondary)";
 
     return (
         <div className="flex items-center gap-2">
@@ -52,37 +51,16 @@ export function ShareButton({title, description}: ShareButtonProps) {
                 }
             >
                 <Button
-                    size="s"
+                    size="m"
                     view="flat"
                     onClick={handleClick}
                     disabled={status === "copied"}
                 >
-                    {status === "idle" && (
-                        <Share2 size={16} strokeWidth={1.75} color={iconColor} />
-                    )}
+                    <ArrowShapeTurnUpRight  />
 
-                    {status === "copied" && (
-                        <CheckCircle size={16} strokeWidth={1.75} color="var(--g-color-text-positive)" />
-                    )}
-
-                    {status === "error" && (
-                        <XCircle size={16} strokeWidth={1.75} color="var(--g-color-text-danger)" />
-                    )}
                 </Button>
             </Tooltip>
 
-            {/* Текст статуса рядом */}
-            {status === "copied" && (
-                <Text variant="body-3" color="positive">
-                    Ссылка скопирована
-                </Text>
-            )}
-
-            {status === "error" && (
-                <Text variant="body-3" color="danger">
-                    Не удалось поделиться
-                </Text>
-            )}
         </div>
     );
 }

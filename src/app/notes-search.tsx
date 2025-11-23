@@ -3,6 +3,7 @@
 import Link from 'next/link';
 import {useMemo, useState} from 'react';
 import {Card, Label, Text, TextInput} from '@gravity-ui/uikit';
+import { ArrowRight } from "@gravity-ui/icons";
 
 type NoteMeta = {
     title?: string;
@@ -63,27 +64,10 @@ export function NotesSearch({notes}: Props) {
         });
     }, [notes, query]);
 
-    const allTags = useMemo(() => {
-        const tags = new Set<string>();
-        notes.forEach((note) => {
-            (note.meta.tags || []).forEach((t) => tags.add(t));
-        });
-        return Array.from(tags).sort();
-    }, [notes]);
 
-    const tagSuggestions = useMemo(() => {
-        if (!query.startsWith('#')) return [];
-
-        const clean = query.slice(1).toLowerCase();
-
-        return allTags.filter((tag) =>
-            tag.toLowerCase().startsWith(clean),
-        );
-    }, [query, allTags]);
 
     return (
         <div className="space-y-4">
-            {/* Поиск */}
             <div className="relative">
                 <TextInput
                     type="text"
@@ -95,30 +79,6 @@ export function NotesSearch({notes}: Props) {
                     onUpdate={setQuery}
                     qa="notes-search-input"
                 />
-
-                {/*{tagSuggestions.length > 0 && (*/}
-                {/*    <Card*/}
-                {/*        view="outlined"*/}
-                {/*        className="*/}
-                {/*            absolute left-0 right-0 mt-1*/}
-                {/*            z-1000 max-h-60 overflow-y-auto*/}
-                {/*        "*/}
-                {/*    >*/}
-                {/*        {tagSuggestions.map((tag) => (*/}
-                {/*            <button*/}
-                {/*                key={tag}*/}
-                {/*                type="button"*/}
-                {/*                onClick={() => setQuery(`#${tag}`)}*/}
-                {/*                className="*/}
-                {/*                    w-full text-left px-4 py-2 text-sm*/}
-                {/*                    hover:bg-slate-100 dark:hover:bg-slate-700*/}
-                {/*                "*/}
-                {/*            >*/}
-                {/*                <Text variant="body-2">#{tag}</Text>*/}
-                {/*            </button>*/}
-                {/*        ))}*/}
-                {/*    </Card>*/}
-                {/*)}*/}
             </div>
 
             <ul className="space-y-3">
@@ -135,20 +95,14 @@ export function NotesSearch({notes}: Props) {
 
                 {filteredNotes.map((note) => (
                     <li key={note.slug}>
-                        <Link href={`/notes/${note.slug}`} className="block">
-                            <Card
-                                view="outlined"
-                                type="container"
-                                className="
-                                    px-5 py-4
-                                    hover:shadow-md
-                                    transition-shadow
-                                "
-                            >
-                                <Text
-                                    as="h2"
-                                    variant="subheader-3"
-                                >
+                        <Card
+                            theme="info"
+                            view="raised"
+                            type="container"
+                            className="px-5 py-4 relative"
+                        >
+                            <div className="pr-10">
+                                <Text as="h2" variant="subheader-3">
                                     {note.meta.title || note.slug}
                                 </Text>
 
@@ -162,23 +116,37 @@ export function NotesSearch({notes}: Props) {
                                     </Text>
                                 )}
 
-                                {note.meta.tags &&
-                                    note.meta.tags.length > 0 && (
-                                        <div className="mt-3 flex flex-wrap gap-1.5">
-                                            {note.meta.tags.map((tag) => (
-                                                <Label
-                                                    key={tag}
-                                                    size="xs"
-                                                    theme="info"
-                                                    interactive
-                                                >
-                                                    {tag}
-                                                </Label>
-                                            ))}
-                                        </div>
-                                    )}
-                            </Card>
-                        </Link>
+                                {note.meta.tags && note.meta.tags?.length > 0 && (
+                                    <div className="mt-3 flex flex-wrap gap-1.5">
+                                        {note.meta.tags.map((tag) => (
+                                            <Label
+                                                onClick={(e) => {
+                                                    setQuery(`#${tag}`);
+                                                }}
+                                                interactive
+                                                key={tag}
+                                                size="xs"
+                                                theme="info"
+                                            >
+                                                {tag}
+                                            </Label>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            {/* Стрелка справа */}
+                            <Link
+                                href={`/notes/${note.slug}`}
+                                className="
+                        absolute right-4 top-1/2 -translate-y-1/2
+                        text-slate-400 hover:text-slate-600
+                        dark:text-slate-500 dark:hover:text-slate-300
+                    "
+                            >
+                                <ArrowRight className="w-5 h-5" />
+                            </Link>
+                        </Card>
                     </li>
                 ))}
             </ul>
