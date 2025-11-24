@@ -1,34 +1,39 @@
-This is a [Next.js](https://nextjs.org) project bootstrapped with [`create-next-app`](https://nextjs.org/docs/app/api-reference/cli/create-next-app).
+Если вы нашли неточность, или хотите добавить новую статью, то можете это сделать.
 
-## Getting Started
 
-First, run the development server:
+1. **Сделайте форк репозитория**  
+   Нажмите **Fork** в правом верхнем углу GitHub.
 
-```bash
-npm run dev
-# or
-yarn dev
-# or
-pnpm dev
-# or
-bun dev
-```
+2. **Создайте новую ветку**  
+   Желательно с коротким описанием задачи:
+   ```bash
+   git checkout -b fix-typo-in-arrays-article
+   ```
 
-Open [http://localhost:3000](http://localhost:3000) with your browser to see the result.
+3. **Внесите изменения**
+    - статьи находятся в `src/content/notes`
 
-You can start editing the page by modifying `app/page.tsx`. The page auto-updates as you edit the file.
+4. **Протестируйте локально**
+   ```bash
+   npm install
+   npm run dev
+   ```
+   Убедитесь, что страница собирается без ошибок и не ломается тёмная/светлая тема.
 
-## Learn More
+5. **Оформите Pull Request**
+    - короткое и понятное название
+    - описание, что именно было изменено и почему
+    - если это новая статья, оформите ее как те, что уже есть
 
-To learn more about Next.js, take a look at the following resources:
 
-- [Next.js Documentation](https://nextjs.org/docs) - learn about Next.js features and API.
-- [Learn Next.js](https://nextjs.org/learn) - an interactive Next.js tutorial.
+### 🧩 Стиль и формат
 
-You can check out [the Next.js GitHub repository](https://github.com/vercel/next.js) - your feedback and contributions are welcome!
+- Используйте **Markdown** (`.md`)
+- Пишите короткие, понятные фрагменты
+- Код — в fenced blocks (` ```js `)
+- Следуйте общему стилю статей
 
-## Deploy on Vercel
+### 📬 Обратная связь
 
-The easiest way to deploy your Next.js app is to use the [Vercel Platform](https://vercel.com/new?utm_medium=default-template&filter=next.js&utm_source=create-next-app&utm_campaign=create-next-app-readme) from the creators of Next.js.
-
-Check out our [Next.js deployment documentation](https://nextjs.org/docs/app/building-your-application/deploying) for more details.
+Если вы не уверены, как лучше реализовать идею — создайте **Issue**.  
+Мы обсудим предложение, чтобы PR прошёл быстрее.
