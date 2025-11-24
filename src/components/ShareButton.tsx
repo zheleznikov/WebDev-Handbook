@@ -40,7 +40,7 @@ export function ShareButton({title, description}: ShareButtonProps) {
 
 
     return (
-        <div className="flex items-center gap-2">
+        <div className="flex">
             <Tooltip
                 content={
                     status === "copied"
@@ -55,9 +55,16 @@ export function ShareButton({title, description}: ShareButtonProps) {
                     view="flat"
                     onClick={handleClick}
                     disabled={status === "copied"}
+                    className="
+                p-2
+                aspect-square
+                flex items-center justify-center
+                rounded-lg
+                hover:bg-[var(--g-color-base-simple-hover)]
+                active:bg-[var(--g-color-base-simple-active)]
+            "
                 >
-                    <ArrowShapeTurnUpRight  />
-
+                    <ArrowShapeTurnUpRight className="h-5 w-5" />
                 </Button>
             </Tooltip>
 

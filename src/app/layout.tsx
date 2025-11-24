@@ -42,10 +42,10 @@ export default async function RootLayout({
         <AppThemeProvider initialTheme={initialTheme}>
             <div className="min-h-screen bg-stone-50 dark:bg-neutral-900">
                 <Header />
-                <main className="pt-16">
+                <main className="pt-8">
                     {children}
                 </main>
-                {/*<AppFooter/>*/}
+                <AppFooter/>
             </div>
         </AppThemeProvider>
         </body>

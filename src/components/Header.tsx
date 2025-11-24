@@ -43,8 +43,8 @@ export default function Header() {
                 )}
 
                 <Flex alignItems="center" gap={3}>
-                    <Text variant="body-2" color="secondary">
-                        WebDev Handbook
+                    <Text variant="header-1" as={"h1"} color={"primary"}>
+                        Справочник по JS
                     </Text>
                 </Flex>
                 <HeaderThemeToggle />

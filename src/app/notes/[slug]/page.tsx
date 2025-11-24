@@ -47,49 +47,6 @@ export default async function NotePage({ params }: NotePageProps) {
     return (
         <main className="min-h-screen transition-colors">
             <div className="mx-auto w-full px-0 sm:px-6 py-8 sm:max-w-3xl">
-                <header className="mb-6 flex flex-col sm:flex-row sm:items-start sm:justify-between gap-3">
-                    <div className="flex-1">
-                        <Text as="h1" variant="display-2" className="pl-4">
-                            {note.meta.title || note.slug}
-                        </Text>
-
-                        {note.meta.description && (
-                            <Text
-                                as="p"
-                                variant="body-2"
-                                color="secondary"
-                                className="mt-2 pl-4"
-                            >
-                                {note.meta.description}
-                            </Text>
-                        )}
-
-                        {currentTags.length > 0 && (
-                            <div className="mt-3 flex flex-wrap gap-1.5 pl-4">
-                                {currentTags.map((tag) => (
-                                    <Label
-                                        key={tag}
-                                        size="xs"
-                                        theme="info"
-                                        className="cursor-default"
-                                    >
-                                        {tag}
-                                    </Label>
-                                ))}
-                            </div>
-                        )}
-                    </div>
-
-                    {/* Правая колонка: Share button */}
-                    <div className="pl-4 sm:pl-0 sm:pt-4">
-                        <ShareButton
-                            title={note.meta.title || note.slug}
-                            description={note.meta.description}
-                        />
-                    </div>
-                </header>
-
-                {/* Основной контент заметки */}
                 <Card
                     view="outlined"
                     className="
@@ -104,7 +61,6 @@ export default async function NotePage({ params }: NotePageProps) {
                         />
                     </div>
 
-                    {/* Подвал карточки: дата слева, автор справа */}
                     <div
                         className="
                             flex items-center justify-between
@@ -133,6 +89,37 @@ export default async function NotePage({ params }: NotePageProps) {
                                 </Text>
                             </div>
                         )}
+                    </div>
+                    <div
+                        className="
+                            flex items-center justify-between
+                            py-2 px-2
+                        "
+                        style={{
+                            borderTop: "1px solid var(--g-color-line-generic)",
+                        }}
+                    >
+                            <div className="flex-1">
+                                {currentTags.length > 0 && (
+                                    <div className="mt-3 flex flex-wrap gap-1.5 pl-4">
+                                        {currentTags.map((tag) => (
+                                            <Label
+                                                key={tag}
+                                                size="xs"
+                                                theme="info"
+                                                className="cursor-default"
+                                            >
+                                                {tag}
+                                            </Label>
+                                        ))}
+                                    </div>
+                                )}
+                            </div>
+
+                            <ShareButton
+                                title={note.meta.title || note.slug}
+                                description={note.meta.description}
+                            />
                     </div>
                 </Card>
 

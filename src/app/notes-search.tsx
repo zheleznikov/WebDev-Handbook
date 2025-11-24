@@ -71,7 +71,7 @@ export function NotesSearch({notes}: Props) {
             <div className="relative">
                 <TextInput
                     type="text"
-                    size="l"
+                    size="xl"
                     view="normal"
                     hasClear
                     placeholder="Поиск по заметкам и тегам..."

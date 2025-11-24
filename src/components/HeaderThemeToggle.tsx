@@ -14,7 +14,6 @@ export function HeaderThemeToggle() {
                 setTheme(checked ? "dark" : "light");
             }}
             size="l"
-            content="Тема"
         />
     );
 }
