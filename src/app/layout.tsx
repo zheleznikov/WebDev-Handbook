@@ -40,9 +40,9 @@ export default async function RootLayout({
         >
         <body className={rootClassName}>
         <AppThemeProvider initialTheme={initialTheme}>
-            <div className="min-h-screen bg-stone-50 dark:bg-neutral-900">
+            <div className="min-h-screen flex flex-col bg-stone-50 dark:bg-neutral-900">
                 <Header />
-                <main className="pt-8">
+                <main className="pt-8  flex-1">
                     {children}
                 </main>
                 <AppFooter/>

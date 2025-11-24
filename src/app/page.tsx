@@ -11,7 +11,7 @@ export default function HomePage() {
 
     return (
         <main
-            className="min-h-screen py-12"
+            className="pt-12"
         >
             <div className="max-w-3xl mx-auto">
                 <NotesSearch notes={notes} />
