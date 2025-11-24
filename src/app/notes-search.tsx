@@ -30,13 +30,11 @@ export function NotesSearch({notes}: Props) {
 
         const tokens = raw.split(/\s+/);
 
-        // Теги: все слова, начинающиеся с "#"
         const tagFilters = tokens
             .filter((t) => t.startsWith('#'))
             .map((t) => t.slice(1))
             .filter(Boolean);
 
-        // Остальной текст — обычный поисковый запрос
         const textQuery = tokens
             .filter((t) => !t.startsWith('#'))
             .join(' ')
@@ -135,7 +133,6 @@ export function NotesSearch({notes}: Props) {
                                 )}
                             </div>
 
-                            {/* Стрелка справа */}
                             <Link
                                 href={`/notes/${note.slug}`}
                                 className="

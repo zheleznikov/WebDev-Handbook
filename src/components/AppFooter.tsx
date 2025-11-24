@@ -6,7 +6,7 @@ export default function AppFooter() {
     const year = new Date().getFullYear();
 
     return (
-        <footer className="border-t px-4 py-6">
+        <footer className="border-t px-4 py-6 mt-6">
             <Flex
                 justifyContent="space-between"
                 alignItems="center"
