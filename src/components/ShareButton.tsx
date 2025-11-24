@@ -16,7 +16,6 @@ export function ShareButton({title, description}: ShareButtonProps) {
         try {
             const url = window.location.href;
 
-            // Web Share API
             if (navigator.share) {
                 await navigator.share({
                     title,
@@ -27,7 +26,6 @@ export function ShareButton({title, description}: ShareButtonProps) {
                 return;
             }
 
-            // Copy fallback
             await navigator.clipboard.writeText(url);
             setStatus("copied");
             setTimeout(() => setStatus("idle"), 2200);

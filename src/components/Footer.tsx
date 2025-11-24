@@ -1,8 +1,9 @@
 "use client";
 
 import { Flex, Link, Text, } from "@gravity-ui/uikit";
+import { GithubIcon } from "lucide-react";
 
-export default function AppFooter() {
+export default function Footer() {
     const year = new Date().getFullYear();
 
     return (
@@ -17,9 +18,10 @@ export default function AppFooter() {
                     href="https://github.com/zheleznikov/WebDev-Handbook/blob/master/README.md"
                     target="_blank"
                     rel="noopener noreferrer"
-                    className="flex items-center gap-1"
+                    className="flex items-center gap-1 text-lg font-medium"
                 >
                     Добавить статью
+                    <GithubIcon width={20} height={20} />
                 </Link>
 
                 <Text

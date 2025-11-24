@@ -1,4 +1,3 @@
-// src/components/AppThemeProvider.tsx
 "use client";
 
 import React, {
@@ -33,19 +32,11 @@ export function AppThemeProvider({
     children: React.ReactNode;
     initialTheme: Theme;
 }) {
-    // ❗ стартуем с темы, пришедшей с сервера
     const [theme, setTheme] = useState<Theme>(initialTheme);
 
     useEffect(() => {
-        // Tailwind .dark
         document.documentElement.classList.toggle("dark", theme === "dark");
-
-        // localStorage — чтобы клиент тоже знал
-        try {
-            localStorage.setItem("theme", theme);
-        } catch {}
-
-        // cookie — чтобы сервер знал при следующем запросе
+        localStorage.setItem("theme", theme);
         document.cookie = `theme=${theme}; path=/; max-age=31536000`;
     }, [theme]);
 

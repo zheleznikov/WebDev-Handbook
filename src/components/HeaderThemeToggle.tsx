@@ -9,10 +9,7 @@ export function HeaderThemeToggle() {
     return (
         <Switch
             checked={theme === "dark"}
-            onChange={(e) => {
-                const checked = e.target.checked;
-                setTheme(checked ? "dark" : "light");
-            }}
+            onChange={(e) => setTheme(e.target.checked ? "dark" : "light")}
             size="l"
         />
     );

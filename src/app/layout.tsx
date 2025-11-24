@@ -1,27 +1,27 @@
-// src/app/layout.tsx
 import "./globals.css";
 import '@gravity-ui/uikit/styles/fonts.css';
 import '@gravity-ui/uikit/styles/styles.css';
 import "./gravity-styles.css";
-
-import {Inter} from "next/font/google";
 import Header from "@/components/Header";
-import {AppThemeProvider} from "@/components/AppThemeProvider";
-import {cookies} from "next/headers";
-import {getRootClassName} from "@gravity-ui/uikit/server";
-import AppFooter from "@/components/AppFooter";
+import { AppThemeProvider } from "@/components/AppThemeProvider";
+import { cookies } from "next/headers";
+import { getRootClassName } from "@gravity-ui/uikit/server";
+import Footer from "@/components/Footer";
 
-const inter = Inter({
-    subsets: ["latin", "cyrillic"],
-});
 
-export const metadata = {title: "JS Guide"};
+export const metadata = {
+    title: "Handbook",
+    icons: {
+        icon: "/favicon.png",
+    }
+};
 
 export default async function RootLayout({
     children,
 }: {
     children: React.ReactNode;
 }) {
+
     const cookieStore = await cookies();
     const themeCookie = cookieStore.get("theme")?.value as "light" | "dark" | undefined;
 
@@ -35,7 +35,7 @@ export default async function RootLayout({
     return (
         <html
             lang="ru"
-            className={`${inter.className} ${initialTheme === "dark" ? "dark" : ""}`}
+            className={`${initialTheme === "dark" ? "dark" : ""}`}
             suppressHydrationWarning
         >
         <body className={rootClassName}>
@@ -45,7 +45,7 @@ export default async function RootLayout({
                 <main className="pt-8  flex-1">
                     {children}
                 </main>
-                <AppFooter/>
+                <Footer />
             </div>
         </AppThemeProvider>
         </body>
