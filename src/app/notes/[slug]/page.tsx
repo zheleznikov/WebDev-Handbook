@@ -5,15 +5,42 @@ import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
 import { ShareButton } from "@/components/ShareButton";
-import { Card, Label, Link, Text, User } from "@gravity-ui/uikit";
-import { Calendar } from "@gravity-ui/icons";
-import {PersonFill} from '@gravity-ui/icons';
+import { Card, Label, Link, Text } from "@gravity-ui/uikit";
+import { Calendar, PersonFill } from "@gravity-ui/icons";
+import { Metadata } from "next";
 
 type NotePageProps = {
     params: Promise<{ slug: string }>;
 };
 
 export const runtime = "nodejs";
+
+export async function generateMetadata(
+    { params }: NotePageProps
+): Promise<Metadata> {
+    const { slug } = await params;
+    const note = getNoteBySlug(slug);
+
+    const title = note.meta.title || slug;
+    const description =
+        note.meta.description ||
+        `Заметка по теме: ${title}`;
+
+    return {
+        title,
+        description,
+        openGraph: {
+            title,
+            description,
+            type: "article",
+            authors: note.meta.author ? [note.meta.author] : undefined,
+            tags: Array.isArray(note.meta.tags) ? note.meta.tags : [],
+        },
+        keywords: Array.isArray(note.meta.tags)
+            ? note.meta.tags.join(", ")
+            : undefined,
+    };
+}
 
 export default async function NotePage({ params }: NotePageProps) {
     const { slug } = await params;

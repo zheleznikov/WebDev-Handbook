@@ -3,7 +3,7 @@
 import {Switch} from "@gravity-ui/uikit";
 import {useTheme} from "@/components/AppThemeProvider";
 
-export function HeaderThemeToggle() {
+export function ThemeToggle() {
     const {theme, setTheme} = useTheme();
 
     return (

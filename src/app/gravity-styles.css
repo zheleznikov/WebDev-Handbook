@@ -101,11 +101,11 @@
 }
 
 body {
-    background: #f3f3f3; /* твой глобальный серый фон */
+    background: #f3f3f3;
     color: var(--color-page-text);
 }
 
 .dark body {
-    background: #0f0f0f; /* темный фон */
+    background: #0f0f0f;
     color: var(--color-page-text);
 }

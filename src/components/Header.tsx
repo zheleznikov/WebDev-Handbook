@@ -1,10 +1,10 @@
 "use client";
 
 import { usePathname } from "next/navigation";
-import { Flex, Link, Text, Icon } from "@gravity-ui/uikit";
+import { Flex, Link, Text } from "@gravity-ui/uikit";
 import { ArrowLeft } from "@gravity-ui/icons";
 import React from "react";
-import { HeaderThemeToggle } from "@/components/HeaderThemeToggle";
+import { ThemeToggle } from "@/components/ThemeToggle";
 
 export default function Header() {
     const pathname = usePathname();
@@ -36,7 +36,7 @@ export default function Header() {
                     </Text>
                 </Flex>
 
-                <HeaderThemeToggle />
+                <ThemeToggle />
             </Flex>
         </div>
     );
