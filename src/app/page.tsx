@@ -1,5 +1,4 @@
-import {Text} from '@gravity-ui/uikit';
-import {getNoteSlugs, getNoteBySlug} from '@/lib/notes';
+import { getNoteBySlug, getNoteSlugs } from '@/lib/notes';
 import { NotesSearch } from "@/app/notes-search";
 
 export default function HomePage() {
@@ -10,12 +9,8 @@ export default function HomePage() {
     });
 
     return (
-        <main
-            className="pt-12"
-        >
-            <div className="max-w-3xl mx-auto">
-                <NotesSearch notes={notes} />
-            </div>
-        </main>
+        <div className="max-w-3xl mx-auto pt-20">
+            <NotesSearch notes={notes} />
+        </div>
     );
 }

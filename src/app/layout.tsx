@@ -25,9 +25,7 @@ export default async function RootLayout({
     const cookieStore = await cookies();
     const themeCookie = cookieStore.get("theme")?.value as "light" | "dark" | undefined;
 
-    const initialTheme: "light" | "dark" =
-        themeCookie === "dark" ? "dark" : "light";
-
+    const initialTheme: "light" | "dark" = themeCookie === "dark" ? "dark" : "light";
     const gravityTheme = initialTheme === "dark" ? "dark-hc" : "light-hc";
 
     const rootClassName = getRootClassName({theme: gravityTheme});
@@ -40,9 +38,9 @@ export default async function RootLayout({
         >
         <body className={rootClassName}>
         <AppThemeProvider initialTheme={initialTheme}>
-            <div className="min-h-screen flex flex-col bg-stone-50 dark:bg-neutral-900">
+            <div className="min-h-screen flex flex-col">
                 <Header />
-                <main className="pt-8  flex-1">
+                <main className="flex-1">
                     {children}
                 </main>
                 <Footer />

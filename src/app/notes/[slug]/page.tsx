@@ -5,7 +5,7 @@ import remarkRehype from 'remark-rehype';
 import rehypeHighlight from 'rehype-highlight';
 import rehypeStringify from 'rehype-stringify';
 import { ShareButton } from "@/components/ShareButton";
-import { Card, Label, Link, Text } from "@gravity-ui/uikit";
+import { Card, Link, Text } from "@gravity-ui/uikit";
 import { Calendar, PersonFill } from "@gravity-ui/icons";
 import { Metadata } from "next";
 
@@ -16,9 +16,9 @@ type NotePageProps = {
 export const runtime = "nodejs";
 
 export async function generateMetadata(
-    { params }: NotePageProps
+    {params}: NotePageProps
 ): Promise<Metadata> {
-    const { slug } = await params;
+    const {slug} = await params;
     const note = getNoteBySlug(slug);
 
     const title = note.meta.title || slug;
@@ -42,8 +42,8 @@ export async function generateMetadata(
     };
 }
 
-export default async function NotePage({ params }: NotePageProps) {
-    const { slug } = await params;
+export default async function NotePage({params}: NotePageProps) {
+    const {slug} = await params;
 
     const note = getNoteBySlug(slug);
 
@@ -72,14 +72,11 @@ export default async function NotePage({ params }: NotePageProps) {
     const contentHtml = processed.toString();
 
     return (
-        <main className="min-h-screen transition-colors">
+        <main className="min-h-screen transition-colors pt-12">
             <div className="mx-auto w-full px-0 sm:px-6 py-8 sm:max-w-3xl">
                 <Card
                     view="outlined"
-                    className="
-                        relative rounded-2xl
-                        shadow-sm
-                    "
+                    className=" relative rounded-2xl shadow-sm"
                 >
                     <div className="px-4 sm:px-6 py-5">
                         <article
@@ -87,66 +84,34 @@ export default async function NotePage({ params }: NotePageProps) {
                             dangerouslySetInnerHTML={{__html: contentHtml}}
                         />
                     </div>
-
                     <div
-                        className="
-                            flex items-center justify-between
-                            px-4 sm:px-6 py-4 text-sm
-                        "
-                        style={{
-                            borderTop: "1px solid var(--g-color-line-generic)",
-                        }}
+                        className="flex gap-2 justify-between px-4 sm:px-6 py-3 text-sm"
+                        style={{borderTop: "1px solid var(--g-color-line-generic)"}}
                     >
-                        {note.meta.date ? (
-                            <div className="flex items-center gap-1.5">
-                                <Calendar className="h-4 w-4" />
-                                <Text variant="body-3" color="secondary">
-                                    {note.meta.date}
-                                </Text>
-                            </div>
-                        ) : (
-                            <span />
-                        )}
-
-                        {note.meta.author && (
-                            <div className="flex items-center gap-1.5">
-                                <PersonFill className="h-4 w-4" />
-                                <Text variant="body-3" color="secondary">
-                                    {note.meta.author}
-                                </Text>
-                            </div>
-                        )}
-                    </div>
-                    <div
-                        className="
-                            flex items-center justify-between
-                            py-2 px-2
-                        "
-                        style={{
-                            borderTop: "1px solid var(--g-color-line-generic)",
-                        }}
-                    >
-                            <div className="flex-1">
-                                {currentTags.length > 0 && (
-                                    <div className="mt-3 flex flex-wrap gap-1.5 pl-4">
-                                        {currentTags.map((tag) => (
-                                            <Label
-                                                key={tag}
-                                                size="xs"
-                                                theme="info"
-                                                className="cursor-default"
-                                            >
-                                                {tag}
-                                            </Label>
-                                        ))}
+                        <div className="flex flex-col items-center">
+                            <div className="flex flex-wrap items-center gap-3">
+                                {note.meta.date && (
+                                    <div className="flex items-center gap-1.5">
+                                        <Calendar className="h-4 w-4" />
+                                        <Text variant="body-3" color="secondary">
+                                            {note.meta.date}
+                                        </Text>
+                                    </div>
+                                )}
+                                {note.meta.author && (
+                                    <div className="flex items-center gap-1.5">
+                                        <PersonFill className="h-4 w-4" />
+                                        <Text variant="body-3" color="secondary">
+                                            {note.meta.author}
+                                        </Text>
                                     </div>
                                 )}
                             </div>
-
-                            <ShareButton
-                                title={note.meta.title || note.slug}
-                                description={note.meta.description}
-                            />
+                        </div>
+                        <ShareButton
+                            title={note.meta.title || note.slug}
+                            description={note.meta.description}
+                        />
                     </div>
                 </Card>
 

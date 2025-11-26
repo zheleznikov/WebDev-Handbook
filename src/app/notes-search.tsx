@@ -1,8 +1,7 @@
 'use client';
 
-import Link from 'next/link';
-import {useMemo, useState} from 'react';
-import {Card, Label, Text, TextInput} from '@gravity-ui/uikit';
+import { useMemo, useState } from 'react';
+import { Card, Label, Text, TextInput, Link } from '@gravity-ui/uikit';
 import { ArrowRight } from "@gravity-ui/icons";
 
 type NoteMeta = {
@@ -63,9 +62,9 @@ export function NotesSearch({notes}: Props) {
     }, [notes, query]);
 
 
-
     return (
         <div className="space-y-4">
+
             <div className="relative">
                 <TextInput
                     type="text"
@@ -75,7 +74,6 @@ export function NotesSearch({notes}: Props) {
                     placeholder="Поиск по заметкам и тегам..."
                     value={query}
                     onUpdate={setQuery}
-                    qa="notes-search-input"
                 />
             </div>
 
@@ -104,23 +102,11 @@ export function NotesSearch({notes}: Props) {
                                     {note.meta.title || note.slug}
                                 </Text>
 
-                                {note.meta.description && (
-                                    <Text
-                                        variant="body-2"
-                                        color="secondary"
-                                        className="mt-1 line-clamp-2"
-                                    >
-                                        {note.meta.description}
-                                    </Text>
-                                )}
-
                                 {note.meta.tags && note.meta.tags?.length > 0 && (
                                     <div className="mt-3 flex flex-wrap gap-1.5">
                                         {note.meta.tags.map((tag) => (
                                             <Label
-                                                onClick={(e) => {
-                                                    setQuery(`#${tag}`);
-                                                }}
+                                                onClick={() => setQuery(`#${tag}`)}
                                                 interactive
                                                 key={tag}
                                                 size="xs"
@@ -133,13 +119,8 @@ export function NotesSearch({notes}: Props) {
                                 )}
                             </div>
 
-                            <Link
-                                href={`/notes/${note.slug}`}
-                                className="
-                        absolute right-4 top-1/2 -translate-y-1/2
-                        text-slate-400 hover:text-slate-600
-                        dark:text-slate-500 dark:hover:text-slate-300
-                    "
+                            <Link href={`/notes/${note.slug}`}
+                                className="absolute right-4 top-1/2 -translate-y-1/2"
                             >
                                 <ArrowRight className="w-5 h-5" />
                             </Link>

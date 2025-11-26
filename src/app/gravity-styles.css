@@ -99,13 +99,3 @@
     --g-color-base-selection-hover: var(--g-color-private-brand-200);
     --g-color-line-brand: var(--g-color-private-brand-600-solid);
 }
-
-body {
-    background: #f3f3f3;
-    color: var(--color-page-text);
-}
-
-.dark body {
-    background: #0f0f0f;
-    color: var(--color-page-text);
-}
