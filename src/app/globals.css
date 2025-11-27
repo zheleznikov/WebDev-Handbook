@@ -163,4 +163,15 @@
   }
 }
 
+.dark .prose-notes strong, .dark .prose-notes b {
+    color: var(--color-slate-100);
+}
 
+.prose-notes  a {
+    color: #b88a46;
+    border-bottom: 1px solid #b88a46;
+}
+
+.prose-notes blockquote {
+    color: inherit;
+}
