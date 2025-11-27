@@ -26,7 +26,7 @@ class MyPromise {
     /* ... констркутор итд */
 
     // наш then возвращает новый промис
-    then(onFulfilled, onRejected) { 
+    then(onFulfilled, onRejected) {
         return new MyPromise((resolve, reject) => {
 
             if (onFulfilled) {
@@ -38,7 +38,6 @@ class MyPromise {
             if (onRejected) {/* сделаем позже*/}
         });
     }
-    
 }
 
 ```
@@ -119,7 +118,6 @@ class MyPromise {
             if (onRejected) {/* сделаем позже*/}
         });
     }
-    
 }
 ```
 Но чтобы это работало, нам нужно подготовить конструктор.
@@ -132,42 +130,42 @@ class MyPromise {
 
 А при вызове `resolve()` и `reject()` — выполним все накопленные обработчики асинхронно.
 ```js
-    constructor(executor) { 
-        this.state = "pending"; 
-        this.value = undefined; 
-        this.reason = undefined; 
-        this.thenHandlers = []; // добавили массив для обработчиков fulfilled
-        this.catchHandlers = []; // добавили массив для обработчиков reject
-        
-        const resolve = (value) => {
-            if (this.state !== "pending") return;
-            this.state = "fulfilled";
-            this.value = value;
-            runAsync(() => this.thenHandlers.forEach(callback => callback())); // выполняем асихронно все колбэки
-        }
-        
-        const reject = (reason) => { 
-            if (this.state !== "pending") return;
-            this.state = "rejected";
-            this.reason = reason;
-            runAsync(() => this.catchHandlers.forEach(callback => callback())); // выполняем асихронно все колбэки 
-        }
-        
-        // кроме этого сделаем более безопасным вызов executor - функции
-        try {
-           executor(resolve, reject); // вызываем функцию executor синхронно
-        } catch(e) {
-          reject(e);
-        }
+constructor(executor) { 
+    this.state = "pending"; 
+    this.value = undefined; 
+    this.reason = undefined; 
+    this.thenHandlers = []; // добавили массив для обработчиков fulfilled
+    this.catchHandlers = []; // добавили массив для обработчиков reject
+    
+    const resolve = (value) => {
+        if (this.state !== "pending") return;
+        this.state = "fulfilled";
+        this.value = value;
+        runAsync(() => this.thenHandlers.forEach(callback => callback())); // выполняем асихронно все колбэки
     }
+    
+    const reject = (reason) => { 
+        if (this.state !== "pending") return;
+        this.state = "rejected";
+        this.reason = reason;
+        runAsync(() => this.catchHandlers.forEach(callback => callback())); // выполняем асихронно все колбэки 
+    }
+    
+    // кроме этого сделаем более безопасным вызов executor - функции
+    try {
+       executor(resolve, reject); // вызываем функцию executor синхронно
+    } catch(e) {
+      reject(e);
+    }
+}
 ```
 Теперь, если `then` вызвали в момент, когда промис ещё в `pending`, мы просто кладём обработчик в массив -
 и позже `resolve()` их вызовет.
 ```js
-        if (this.state === "pending") {
-            // ЧТО ДЕЛАТЬ ЗДЕСЬ?
-            this.thenHandlers.push(handleFulfilled)
-        }
+if (this.state === "pending") {
+    // ЧТО ДЕЛАТЬ ЗДЕСЬ?
+    this.thenHandlers.push(handleFulfilled)
+}
 ```
 
 Так уже лучше: наш `then` уже работает асинхронно, и не выполняется если состояние "родительского" промиса pending.
@@ -177,21 +175,21 @@ class MyPromise {
 
 Реализуем первый пункт.
 ```js
-            const handleFulfilled = () => {
-                // добавим проверку, функция ли пришла в качестве колбэка
-                if (typeof onFulfilled !== "function") {
-                    // и если нет, то просто зарезолвим value
-                    resolve(this.value); 
-                    return;
-                }   
-                
-                try { // сделаем вызов более безопасным
-                    const result = onFulfilled(this.value);
-                    resolve(result);                    
-                } catch (e) {
-                    reject(e);
-                }
-            }
+const handleFulfilled = () => {
+    // добавим проверку, функция ли пришла в качестве колбэка
+    if (typeof onFulfilled !== "function") {
+        // и если нет, то просто зарезолвим value
+        resolve(this.value); 
+        return;
+    }   
+    
+    try { // сделаем вызов более безопасным
+        const result = onFulfilled(this.value);
+        resolve(result);                    
+    } catch (e) {
+        reject(e);
+    }
+}
 ```
 
 ## Проверяем, работает ли асинхронность и цепочки
