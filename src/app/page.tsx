@@ -3,6 +3,7 @@ import { NotesSearch } from "@/app/notes-search";
 
 export default function HomePage() {
     const slugs = getNoteSlugs();
+
     const notes = slugs.map((file) => {
         const slug = file.replace(/\.md$/, '');
         return getNoteBySlug(slug);
